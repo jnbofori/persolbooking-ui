@@ -1,22 +1,27 @@
 <template>
-    <form @submit.prevent="handleSubmit">
+  <div class="flex flex-row justify-center items-center mt-20">
+    <div class="shadow-md rounded-md p-10 w-2/5 border-t flex flex-col">
+      <img src="https://www.persol.net/wp-content/uploads/2016/10/Persol-Logo-small.png" alt="Logo" class="my-3 w-64 self-center">
+      <form @submit.prevent="handleSubmit">
         <div v-if="error" class="alert alert-danger" role="alert">
-            {{error}}
+          {{error}}
         </div>
-        <h3>Admin Login</h3>
+        <h3 class="font-semibold">Admin Login</h3>
 
         <div class="form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" v-model="email" placeholder="Email"/>
+          <label>Email</label>
+          <input type="email" class="form-control" v-model="email" placeholder="Email"/>
         </div>
 
         <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" v-model="password" placeholder="Password"/>
+          <label>Password</label>
+          <input type="password" class="form-control" v-model="password" placeholder="Password"/>
         </div>
 
         <button class="btn btn-primary btn-block">Login</button>
-    </form>
+      </form>
+    </div>
+  </div>
 </template>
 
 <script>

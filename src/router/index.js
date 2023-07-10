@@ -9,6 +9,14 @@ import AdminLogin from "../views/admin/auth/AdminLogin";
 import ListUsers from "../views/admin/users/ListUsers";
 import NewUser from "../views/admin/users/NewUser";
 import UpdateUser from "../views/admin/users/UpdateUser";
+import ListFacilities from "../views/admin/facilities/ListFacilities";
+import NewFacility from "../views/admin/facilities/NewFacility";
+import UpdateFacility from "../views/admin/facilities/UpdateFacility";
+
+import ListFacilityTypes from "../views/admin/facility-types/ListFacilityTypes";
+import NewFacilityType from "../views/admin/facility-types/NewFacilityType";
+import UpdateFacilityType from "../views/admin/facility-types/UpdateFacilityType";
+
 import ViewPatientIssues from "../views/ViewPatientIssues";
 
 
@@ -84,6 +92,66 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Update Employee',
+    }
+  },
+  {
+    path: '/admin/facilities',
+    name: 'admin-facilities',
+    component: ListFacilities,
+    meta: {
+      roles: ["admin"],
+      require_auth: true,
+      pageTitle: 'Facilities',
+    }
+  },
+  {
+    path: '/admin/facilities/new',
+    name: 'admin-new-facility',
+    component: NewFacility,
+    meta: {
+      roles: ["admin"],
+      require_auth: true,
+      pageTitle: 'Add New Facility',
+    }
+  },
+  {
+    path: '/admin/facilities/:id',
+    name: 'admin-update-facility',
+    component: UpdateFacility,
+    meta: {
+      roles: ["admin"],
+      require_auth: true,
+      pageTitle: 'Update Facility',
+    }
+  },
+  {
+    path: '/admin/facility-types',
+    name: 'admin-facility-types',
+    component: ListFacilityTypes,
+    meta: {
+      roles: ["admin"],
+      require_auth: true,
+      pageTitle: 'Facility Types',
+    }
+  },
+  {
+    path: '/admin/facility-types/new',
+    name: 'admin-new-facility-type',
+    component: NewFacilityType,
+    meta: {
+      roles: ["admin"],
+      require_auth: true,
+      pageTitle: 'Add New Facility Type',
+    }
+  },
+  {
+    path: '/admin/facility-types/:id',
+    name: 'admin-update-facility-type',
+    component: UpdateFacilityType,
+    meta: {
+      roles: ["admin"],
+      require_auth: true,
+      pageTitle: 'Update Facility Type',
     }
   },
   {

@@ -17,7 +17,7 @@
         </el-col>
       </el-row>
 
-      <el-button type="primary" color="#1E3A8A" class="ml-3 mt-3" @click="handleSubmit">Submit</el-button>
+      <el-button type="primary" color="#1E3A8A" class="ml-3 mt-3" @click="handleSubmit">Update</el-button>
     </el-form>
   </div>
 </template>
@@ -32,15 +32,35 @@ export default {
   components: {},
   data() {
     return {
+      facilityTypeId: '',
       name: '',
       description: '',
     }
   },
-  async created() {},
+  async created() {
+    this.fetchFacilityType()
+  },
   methods: {
+    async fetchFacilityType() {
+      try {
+        const { id } = this.$route.params;
+        this.facilityTypeId = id
+        const response = await axios.get(`admin/facility-type/${this.facilityTypeId}`, {
+          headers: {
+            'auth-token': localStorage.getItem('token')
+          }
+        });
+        const facilityType = response.data;
+
+        this.name = facilityType.name
+        this.description = facilityType.description
+      }catch (e) {
+        console.log('error', e)
+      }
+    },
     async handleSubmit() {
       try {
-        await axios.post('admin/facility-type',{
+        await axios.put(`admin/facility-type/${this.facilityTypeId}`, {
           name: this.name,
           description: this.description,
         },
@@ -51,7 +71,7 @@ export default {
         });
 
         ElMessage({
-          message: 'Facility Type Added Successfully.',
+          message: 'Facility Type Updated Successfully.',
           type: 'success',
         })
 

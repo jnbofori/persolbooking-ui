@@ -8,16 +8,36 @@
         <el-menu active-text-color="#625f6e" text-color="#625f6e" class="mt-4">
           <el-menu-item
             index="1"
-            :class="{ 'bg-blue-50 border-l-8 border-blue-900': $route.name === 'admin-users' }"
+            :class="{ 'bg-blue-50 border-l-8 border-blue-900': $route.path.includes('admin/users') }"
             @click="$router.push({ name: 'admin-users' })"
           >
             <el-icon><user /></el-icon>
-            <span class="text-base">Users</span>
+            <span class="text-base">Employees</span>
           </el-menu-item>
-          <el-menu-item index="2"> 
-            <el-icon><icon-menu /></el-icon>
-            <span class="text-base">Facilities</span>
-          </el-menu-item>
+
+          <el-sub-menu index="2">
+            <template #title>
+              <el-icon><location /></el-icon>
+              <span class="text-base">Facilities</span>
+            </template>
+            <el-menu-item
+              index="2-1"
+              :class="{ 'bg-blue-50 border-l-8 border-blue-900': $route.path.includes('admin/facility-types') }"
+              @click="$router.push({ name: 'admin-facility-types' })"
+            > 
+              <el-icon><icon-menu /></el-icon>
+              <span class="text-base">Facility Types</span>
+            </el-menu-item>
+            <el-menu-item
+              index="2-2"
+              :class="{ 'bg-blue-50 border-l-8 border-blue-900': $route.path.includes('admin/facilities') }"
+              @click="$router.push({ name: 'admin-facilities' })"
+            > 
+              <el-icon><icon-menu /></el-icon>
+              <span class="text-base">Facilities</span>
+            </el-menu-item>
+          </el-sub-menu>
+
           <el-menu-item
             index="3"
             :class="{ 'bg-blue-50 border-l-8 border-blue-900': $route.name === 'admin-bookings' }"

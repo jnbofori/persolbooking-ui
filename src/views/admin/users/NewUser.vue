@@ -88,7 +88,7 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        await axios.post('admin/employee/new',{
+        await axios.post('admin/employee',{
           firstname: this.firstname,
           lastname: this.lastname,
           email: this.email,

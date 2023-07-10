@@ -7,7 +7,7 @@
           class="w-50 ml-2"
           placeholder="Search..."
           size="large"
-          @input="fetchEmployees"
+          @input="fetchFacilities"
         />
       </el-col>
       <el-col :span="4">
@@ -15,36 +15,20 @@
       </el-col>
     </el-row>
 
-    <el-table :data="employees" style="width: 100%" class="ml-2">
+    <el-table :data="facilityTypes" style="width: 100%" class="ml-2">
 
-      <el-table-column label="First name" width="auto">
+      <el-table-column label="Name" width="auto">
         <template #default="scope">
           <div style="display: flex; align-items: center">
-            <span style="margin-left: 10px">{{ scope.row.firstname }}</span>
+            <span style="margin-left: 10px">{{ scope.row.name }}</span>
           </div>
         </template>
       </el-table-column>
 
-      <el-table-column label="Last name" width="auto">
+      <el-table-column label="Description" width="auto">
         <template #default="scope">
           <div style="display: flex; align-items: center">
-            <span style="margin-left: 10px">{{ scope.row.lastname }}</span>
-          </div>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Email" width="auto">
-        <template #default="scope">
-          <div style="display: flex; align-items: center">
-            <span style="margin-left: 10px">{{ scope.row.email }}</span>
-          </div>
-        </template>
-      </el-table-column>
-
-      <el-table-column label="Department" width="auto">
-        <template #default="scope">
-          <div style="display: flex; align-items: center">
-            <span style="margin-left: 10px">{{ scope.row.department }}</span>
+            <span style="margin-left: 10px" class="truncate">{{ scope.row.description }}</span>
           </div>
         </template>
       </el-table-column>
@@ -74,24 +58,24 @@ import { debounce } from 'lodash';
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
-  name: 'admin-list-users',
+  name: 'admin-list-facilities',
   components: {},
   data() {
     return {
-      employees: [],
+      facilityTypes: [],
       error: '',
       search: '',
       debounceFetchAllData: () => {},
     }
   },
   async created() {
-    this.debounceFetchAllData = debounce(this.fetchEmployees, 500);
+    this.debounceFetchAllData = debounce(this.fetchFacilities, 500);
     this.debounceFetchAllData()
   },
   methods: {
-    async fetchEmployees() {
+    async fetchFacilities() {
       try {
-        let url = 'admin/employee';
+        let url = 'admin/facility';
         if (this.search) {
           url = `${url}?search=${this.search}`
         }
@@ -100,25 +84,25 @@ export default {
             'auth-token': localStorage.getItem('token')
           }
         });
-        this.employees = response.data;
+        this.facilityTypes = response.data;
       }catch (e) {
         console.log('error', e)
       }
     },
     goToAddNew() {
-      this.$router.push({ name: "admin-new-user" })
+      this.$router.push({ name: "admin-new-facility" })
     },
-    handleEdit(index, user) {
+    handleEdit(index, item) {
       this.$router.push({
-        name: "admin-update-user",
+        name: "admin-update-facility",
         params: {
-          id: user._id
+          id: item._id
         },
       });
     },
-    handleDelete(index, user) {
+    handleDelete(index, item) {
       ElMessageBox.confirm(
-        'This will permanently delete the user. Continue?',
+        'This will permanently delete the facility. Continue?',
         'Warning',
         {
           confirmButtonText: 'Yes',
@@ -127,7 +111,7 @@ export default {
         }
       )
       .then(async () => {
-        axios.delete(`admin/employee/${user._id}`, {
+        axios.delete(`admin/facility/${item._id}`, {
           headers: {
             'auth-token': localStorage.getItem('token')
           }
