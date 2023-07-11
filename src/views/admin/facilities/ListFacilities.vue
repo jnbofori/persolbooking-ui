@@ -15,7 +15,7 @@
       </el-col>
     </el-row>
 
-    <el-table :data="facilityTypes" style="width: 100%" class="ml-2">
+    <el-table v-loading="loading" :data="facilityTypes" style="width: 100%" class="ml-2">
 
       <el-table-column label="Name" width="auto">
         <template #default="scope">
@@ -62,6 +62,7 @@ export default {
   components: {},
   data() {
     return {
+      loading: false,
       facilityTypes: [],
       error: '',
       search: '',
@@ -74,6 +75,7 @@ export default {
   },
   methods: {
     async fetchFacilities() {
+      this.loading = true
       try {
         let url = 'admin/facility';
         if (this.search) {
@@ -86,7 +88,12 @@ export default {
         });
         this.facilityTypes = response.data;
       }catch (e) {
-        console.log('error', e)
+        ElMessage({
+          message: 'Error fetching facilities',
+          type: 'error',
+        })
+      } finally {
+        this.loading = false
       }
     },
     goToAddNew() {
@@ -121,7 +128,12 @@ export default {
             message: 'Delete completed',
           })
           this.debounceFetchAllData()
-        });
+        }).catch(() => {
+            ElMessage({
+            message: 'Error deleting facility',
+            type: 'error',
+          })
+        }) ;
       })
     }
   }

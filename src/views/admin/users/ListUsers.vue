@@ -102,7 +102,10 @@ export default {
         });
         this.employees = response.data;
       }catch (e) {
-        console.log('error', e)
+        ElMessage({
+          message: 'Error fetching employees data',
+          type: 'error',
+        })
       }
     },
     goToAddNew() {
@@ -137,6 +140,11 @@ export default {
             message: 'Delete completed',
           })
           this.debounceFetchAllData()
+        }).catch(() => {
+          ElMessage({
+            message: 'Error deleting employee',
+            type: 'error',
+          })
         });
       })
     }

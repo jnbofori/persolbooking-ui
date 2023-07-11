@@ -73,6 +73,10 @@ export default {
         this.facilityType = facility.facilityType
       }catch (e) {
         console.log('error', e)
+        ElMessage({
+          message: 'Error fetching facility',
+          type: 'error',
+        })
       }
     },
     async fetchFacilityTypes() {
@@ -92,6 +96,10 @@ export default {
         }
       }catch (e) {
         console.log('error', e)
+        ElMessage({
+          message: 'Error fetching facility types',
+          type: 'error',
+        })
       }
     },
     async handleSubmit() {
@@ -115,6 +123,10 @@ export default {
         this.$router.push({ name: 'admin-facilities' })
       } catch (e) {
         console.log(e)
+        ElMessage({
+          message: 'Error updating facility',
+          type: 'error',
+        })
       }
     },
   }

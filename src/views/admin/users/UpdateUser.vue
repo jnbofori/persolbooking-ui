@@ -98,7 +98,10 @@ export default {
         this.email = employee.email
         this.department = employee.department
       }catch (e) {
-        console.log('error', e)
+        ElMessage({
+          message: 'Error fetching employee data',
+          type: 'error',
+        })
       }
     },
     async handleSubmit() {
@@ -123,7 +126,10 @@ export default {
 
         this.$router.push({ name: 'admin-users' })
       } catch (e) {
-        console.log(e)
+        ElMessage({
+          message: 'Error updating employee',
+          type: 'error',
+        })
       }
     },
   }

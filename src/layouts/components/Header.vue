@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-row justify-between items-center ml-3 pt-4">
+    <img v-if="currentUserRole === 'employee'" src="https://www.persol.net/wp-content/uploads/2016/10/Persol-Logo-small.png" alt="Logo" class="my-3">
     <h4 class="text-lg font-medium">{{ $route.meta.pageTitle }}</h4>
     <div class="mr-5 flex flex-row items-center">
       <div class="mr-3">{{ currentUserName }}</div>
@@ -23,6 +24,9 @@ export default {
   computed: {
     currentUserName () {
       return `${get(this.$store, "state.user.firstname")} ${get(this.$store, "state.user.lastname")}`
+    },
+    currentUserRole () {
+      return get(this.$store, "state.user.role")
     }
   },
   methods: {

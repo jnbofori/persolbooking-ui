@@ -108,7 +108,10 @@ export default {
 
         this.$router.push({ name: 'admin-users' })
       } catch (e) {
-        console.log(e)
+        ElMessage({
+          message: 'Error adding new employee',
+          type: 'error',
+        })
       }
     },
   }

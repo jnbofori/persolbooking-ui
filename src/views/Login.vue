@@ -32,31 +32,36 @@
 </template>
 
 <script>
-    import axios from 'axios'
-    export default {
-        name: "Login",
-        data() {
-            return {
-                email: '',
-                password: '',
-                error: ''
-            }
-        },
-        methods: {
-            async handleSubmit() {
-                axios.post('user/login', {
-                    email: this.email,
-                    password: this.password
-                }).then(response => {
-                    this.$emit('checkUser');
-                    localStorage.setItem('token', response.data);
-                    this.$router.push('/home')
-                }).catch(() =>{
-                    this.error = 'Invalid email/password';
-                });
-            }
-        }
+import axios from 'axios'
+export default {
+  name: "Login",
+  data() {
+    return {
+      email: '',
+      password: '',
+      error: ''
     }
+  },
+  methods: {
+    async handleSubmit() {
+      axios.post('auth/login', {
+        email: this.email,
+        password: this.password
+      }).then(response => {
+        const { token, user } = response.data;
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('userData', JSON.stringify(user))
+
+        this.$store.commit('setUser', user)
+
+        this.$router.push({ name: 'bookings' })
+      }).catch(() =>{
+        this.error = 'Invalid email/password';
+      });
+    }
+  }
+}
 </script>
 
 <style scoped>

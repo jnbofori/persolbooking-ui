@@ -4,7 +4,6 @@ import { get } from "lodash"
 import store from '../store'
 import Bookings from '../views/Bookings.vue'
 import Login from "../views/Login";
-import ViewAllPatients from "../views/ViewAllPatients";
 import AdminLogin from "../views/admin/auth/AdminLogin";
 import ListUsers from "../views/admin/users/ListUsers";
 import NewUser from "../views/admin/users/NewUser";
@@ -12,12 +11,9 @@ import UpdateUser from "../views/admin/users/UpdateUser";
 import ListFacilities from "../views/admin/facilities/ListFacilities";
 import NewFacility from "../views/admin/facilities/NewFacility";
 import UpdateFacility from "../views/admin/facilities/UpdateFacility";
-
 import ListFacilityTypes from "../views/admin/facility-types/ListFacilityTypes";
 import NewFacilityType from "../views/admin/facility-types/NewFacilityType";
 import UpdateFacilityType from "../views/admin/facility-types/UpdateFacilityType";
-
-import ViewPatientIssues from "../views/ViewPatientIssues";
 
 
 const routes = [
@@ -31,27 +27,6 @@ const routes = [
     path: '/bookings',
     name: 'bookings',
     component: Bookings,
-    meta: {
-      roles: ["employee"],
-      require_auth: true,
-    }
-  },
-  {
-    path: '/create-booking',
-    name: 'create-booking',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/LogIssue.vue'),
-    meta: {
-      roles: ["employee"],
-      require_auth: true,
-    }
-  },
-  {
-    path: '/booking/:bookingId',
-    name: 'booking-detail',
-    component: () => import(/* webpackPrefetch: true */ '../views/IssueDetail'),
     meta: {
       roles: ["employee"],
       require_auth: true,
@@ -157,21 +132,12 @@ const routes = [
   {
     path: '/admin/bookings',
     name: 'admin-bookings',
-    component: ViewAllPatients,
+    component: Bookings,
     meta: {
       roles: ["admin"],
       require_auth: true,
     }
   },
-  {
-    path: '/admin/bookings/:bookingId',
-    name: 'admin-booking-detail',
-    component: ViewPatientIssues,
-    meta: {
-      roles: ["admin"],
-      require_auth: true,
-    }
-  }
 ];
 
 const router = createRouter({

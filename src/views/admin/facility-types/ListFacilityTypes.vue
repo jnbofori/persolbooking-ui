@@ -86,7 +86,10 @@ export default {
         });
         this.facilityTypes = response.data;
       }catch (e) {
-        console.log('error', e)
+        ElMessage({
+          message: 'Error fetching facility types',
+          type: 'error',
+        })
       }
     },
     goToAddNew() {
@@ -121,6 +124,11 @@ export default {
             message: 'Delete completed',
           })
           this.debounceFetchAllData()
+        }).catch(() => {
+          ElMessage({
+            message: 'Error deleting facility type',
+            type: 'error',
+          })
         });
       })
     }

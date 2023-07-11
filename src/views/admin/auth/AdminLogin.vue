@@ -42,7 +42,6 @@ export default {
         email: this.email,
         password: this.password
       }).then(response => {
-        // this.$emit('checkUser');
         const { token, user } = response.data;
         localStorage.setItem('token', token);
         localStorage.setItem('userData', JSON.stringify(user))

@@ -58,6 +58,10 @@ export default {
         this.$router.push({ name: 'admin-facility-types' })
       } catch (e) {
         console.log(e)
+        ElMessage({
+          message: 'Error adding facility type',
+          type: 'error',
+        })
       }
     },
   }
