@@ -9,6 +9,7 @@
               size="large"
               type="datetime"
               placeholder="Select date and time"
+              :disabled-date="disabledStartDate"
             />
           </el-form-item>
         </el-col>
@@ -20,6 +21,7 @@
               size="large"
               type="datetime"
               placeholder="Select date and time"
+              :disabled-date="disabledEndDate"
             />
           </el-form-item>
         </el-col>
@@ -49,6 +51,8 @@
 <script>
 import axios from "axios";
 import { ElMessage } from 'element-plus'
+import { isAfter, isBefore, isFuture, isPast, isSameDay, isToday } from 'date-fns';
+import { get } from 'lodash';
 
 export default {
   name: 'booking-form',
@@ -82,6 +86,20 @@ export default {
       },
       immediate: true,
       deep: true
+    },
+    startTime: {
+      handler(){
+        this.disabledStartDate()
+      },
+      immediate: true,
+      deep: true
+    },
+    endTime: {
+      handler(){
+        this.disabledEndDate()
+      },
+      immediate: true,
+      deep: true
     }
   },
   methods: {
@@ -101,7 +119,7 @@ export default {
         }
       } catch (e) {
         ElMessage({
-          message: 'Error fetching facilities',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }
@@ -127,17 +145,32 @@ export default {
         this.resetForm()
         this.$emit("closeDialog")
       } catch (e) {
+        console.log(e)
         ElMessage({
-          message: 'You do not have permission to this resource',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }
+    },
+    disabledStartDate(date) {
+      return isPast(date) && !isToday(date) || (this.endTime && isAfter(date, this.endTime)  && !isSameDay(date, this.endTime))
+    },
+    disabledEndDate (date) {
+      return isPast(date) && !isToday(date) || (this.startTime && isBefore(date, this.startTime) && !isSameDay(date, this.startTime))
     },
     resetForm() {
       this.startTime = ''
       this.endTime = ''
       this.facility = ''
     }
+  },
+  computed: {
+    validDatesAndTimes() {
+      if (this.startTime && this.endTime) {
+        return isBefore(this.startTime, this.endTime) && isFuture(this.startTime) && isFuture(this.endTime)
+      }
+      return false
+    },
   }
 }
 </script>

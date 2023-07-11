@@ -70,7 +70,7 @@
 
 <script>
 import axios from "axios";
-import { debounce } from 'lodash';
+import { debounce, get } from 'lodash';
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
@@ -103,7 +103,7 @@ export default {
         this.employees = response.data;
       }catch (e) {
         ElMessage({
-          message: 'Error fetching employees data',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }
@@ -140,9 +140,9 @@ export default {
             message: 'Delete completed',
           })
           this.debounceFetchAllData()
-        }).catch(() => {
+        }).catch((e) => {
           ElMessage({
-            message: 'Error deleting employee',
+            message: get(e, "response.data.message"),
             type: 'error',
           })
         });

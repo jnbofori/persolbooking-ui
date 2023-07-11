@@ -1,4 +1,4 @@
-# syncline-vue
+# persol booking ui
 
 ## Project setup
 ```

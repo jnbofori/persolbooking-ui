@@ -26,6 +26,7 @@
 <script>
 import axios from "axios";
 import { ElMessage } from 'element-plus'
+import { get } from 'lodash';
 
 export default {
   name: 'admin-list-users',
@@ -57,9 +58,8 @@ export default {
 
         this.$router.push({ name: 'admin-facility-types' })
       } catch (e) {
-        console.log(e)
         ElMessage({
-          message: 'Error adding facility type',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }

@@ -47,6 +47,7 @@
 <script>
 import axios from "axios";
 import { ElMessage } from 'element-plus'
+import { get } from 'lodash';
 
 export default {
   name: 'admin-list-users',
@@ -99,7 +100,7 @@ export default {
         this.department = employee.department
       }catch (e) {
         ElMessage({
-          message: 'Error fetching employee data',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }
@@ -127,7 +128,7 @@ export default {
         this.$router.push({ name: 'admin-users' })
       } catch (e) {
         ElMessage({
-          message: 'Error updating employee',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }

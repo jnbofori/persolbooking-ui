@@ -26,6 +26,7 @@
 <script>
 import axios from "axios";
 import { ElMessage } from 'element-plus'
+import { get } from 'lodash';
 
 export default {
   name: 'admin-list-users',
@@ -56,7 +57,7 @@ export default {
         this.description = facilityType.description
       }catch (e) {
         ElMessage({
-          message: 'Error fetching facility type',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }
@@ -81,7 +82,7 @@ export default {
         this.$router.push({ name: 'admin-facility-types' })
       } catch (e) {
         ElMessage({
-          message: 'Error updating facility type',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }

@@ -40,7 +40,14 @@
         </el-form-item>
       </el-row>
 
-      <el-button type="primary" color="#1E3A8A" size="large" class="ml-4 mt-3" @click="handleSubmit">
+      <el-button
+        type="primary"
+        color="#1E3A8A"
+        size="large"
+        class="ml-4 mt-3"
+        :disabled="!validDatesAndTimes"
+        @click="handleSubmit"
+      >
         Book
       </el-button>
     </el-form>
@@ -51,7 +58,8 @@
 <script>
 import axios from "axios";
 import { ElMessage } from 'element-plus'
-import { isAfter, isBefore, isPast, isToday } from 'date-fns';
+import { isAfter, isBefore, isFuture, isPast, isSameDay, isToday } from 'date-fns';
+import { get } from 'lodash';
 
 export default {
   name: 'booking-form',
@@ -84,7 +92,7 @@ export default {
         }
       } catch (e) {
         ElMessage({
-          message: 'Error fetching facilities',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }
@@ -111,22 +119,30 @@ export default {
         this.$emit("closeDialog")
       } catch (e) {
         ElMessage({
-          message: 'Error adding new booking',
-          type: 'success',
+          message: get(e, "response.data.message"),
+          type: 'error',
         })
       }
     },
     disabledStartDate(date) {
-      return isPast(date) && !isToday(date) || (this.endTime && isAfter(date, this.endTime))
+      return isPast(date) && !isToday(date) || (this.endTime && isAfter(date, this.endTime)  && !isSameDay(date, this.endTime))
     },
     disabledEndDate (date) {
-      return isPast(date) && !isToday(date) || (this.startTime && isBefore(date, this.startTime))
+      return isPast(date) && !isToday(date) || (this.startTime && isBefore(date, this.startTime) && !isSameDay(date, this.startTime))
     },
     resetForm() {
       this.startTime = ''
       this.endTime = ''
       this.facility = ''
     }
+  },
+  computed: {
+    validDatesAndTimes() {
+      if (this.startTime && this.endTime) {
+        return isBefore(this.startTime, this.endTime) && isFuture(this.startTime) && isFuture(this.endTime)
+      }
+      return false
+    },
   }
 }
 </script>

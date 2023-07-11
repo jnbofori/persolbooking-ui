@@ -54,7 +54,7 @@
 
 <script>
 import axios from "axios";
-import { debounce } from 'lodash';
+import { debounce, get } from 'lodash';
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 export default {
@@ -89,7 +89,7 @@ export default {
         this.facilityTypes = response.data;
       }catch (e) {
         ElMessage({
-          message: 'Error fetching facilities',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       } finally {
@@ -128,9 +128,9 @@ export default {
             message: 'Delete completed',
           })
           this.debounceFetchAllData()
-        }).catch(() => {
+        }).catch((e) => {
             ElMessage({
-            message: 'Error deleting facility',
+            message: get(e, "response.data.message"),
             type: 'error',
           })
         }) ;

@@ -26,6 +26,8 @@
 
 <script>
 import axios from "axios";
+import { get } from 'lodash';
+import { ElMessage } from 'element-plus';
 
 export default {
   name: "AdminLogin",
@@ -49,8 +51,11 @@ export default {
         this.$store.commit('setUser', user)
 
         this.$router.push({ name: 'admin-users' })
-      }).catch(() =>{
-        this.error = 'Invalid email/password'
+      }).catch((e) =>{
+        ElMessage({
+          message: get(e, "response.data.message"),
+          type: 'error',
+        })
       });
     }
   }

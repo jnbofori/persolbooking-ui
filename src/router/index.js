@@ -158,7 +158,21 @@ const routes = [
       require_auth: true
     }
   },
-  
+  {
+    path: '/404',
+    name: 'error-404',
+    component: () => import('../views/NotFound'),
+    meta: {
+      require_auth: true
+    },
+  },
+  {
+    path: "/:catchAll(.*)", // Unrecognized path automatically matches 404
+    redirect: '/404',
+    meta: {
+      require_auth: true
+    },
+  },
 ];
 
 const router = createRouter({

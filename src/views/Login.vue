@@ -33,6 +33,8 @@
 
 <script>
 import axios from 'axios'
+import { ElMessage } from 'element-plus';
+import { get } from 'lodash';
 export default {
   name: "Login",
   data() {
@@ -56,8 +58,11 @@ export default {
         this.$store.commit('setUser', user)
 
         this.$router.push({ name: 'bookings' })
-      }).catch(() =>{
-        this.error = 'Invalid email/password';
+      }).catch((e) =>{
+        ElMessage({
+          message: get(e, "response.data.message"),
+          type: 'error',
+        })
       });
     }
   }

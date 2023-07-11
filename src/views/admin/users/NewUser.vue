@@ -53,6 +53,7 @@
 <script>
 import axios from "axios";
 import { ElMessage } from 'element-plus'
+import { get } from 'lodash';
 
 export default {
   name: 'admin-list-users',
@@ -109,7 +110,7 @@ export default {
         this.$router.push({ name: 'admin-users' })
       } catch (e) {
         ElMessage({
-          message: 'Error adding new employee',
+          message: get(e, "response.data.message"),
           type: 'error',
         })
       }

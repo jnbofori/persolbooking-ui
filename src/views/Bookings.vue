@@ -109,7 +109,7 @@ import {
           this.bookings = response.data;
         }catch (e) {
           ElMessage({
-            message: 'Error fetching bookings',
+            message: get(e, "response.data.message"),
             type: 'error',
           })
         } finally {
@@ -152,9 +152,9 @@ import {
               message: 'Delete completed',
             })
             this.debounceFetchAllData()
-          }).catch(() => {
+          }).catch((e) => {
             ElMessage({
-              message: 'You do not have permission to this resource',
+              message: get(e, "response.data.message"),
               type: 'error',
             })
           });
