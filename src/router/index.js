@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { get } from "lodash"
 
 import store from '../store'
+import NotAuthorized from "../views/NotAuthorized.vue";
 import Bookings from '../views/Bookings.vue'
 import Login from "../views/Login";
 import AdminLogin from "../views/admin/auth/AdminLogin";
@@ -29,6 +30,7 @@ const routes = [
     component: Bookings,
     meta: {
       roles: ["employee"],
+      layout: 'default',
       require_auth: true,
     }
   },
@@ -47,6 +49,7 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Employees',
+      layout: 'admin',
     }
   },
   {
@@ -57,6 +60,7 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Add New Employee',
+      layout: 'admin',
     }
   },
   {
@@ -67,6 +71,7 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Update Employee',
+      layout: 'admin',
     }
   },
   {
@@ -77,6 +82,7 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Facilities',
+      layout: 'admin',
     }
   },
   {
@@ -87,6 +93,7 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Add New Facility',
+      layout: 'admin',
     }
   },
   {
@@ -97,6 +104,7 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Update Facility',
+      layout: 'admin',
     }
   },
   {
@@ -107,6 +115,7 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Facility Types',
+      layout: 'admin',
     }
   },
   {
@@ -117,6 +126,7 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Add New Facility Type',
+      layout: 'admin',
     }
   },
   {
@@ -127,6 +137,7 @@ const routes = [
       roles: ["admin"],
       require_auth: true,
       pageTitle: 'Update Facility Type',
+      layout: 'admin',
     }
   },
   {
@@ -136,8 +147,18 @@ const routes = [
     meta: {
       roles: ["admin"],
       require_auth: true,
+      layout: 'admin',
     }
   },
+  {
+    path: '/not-authorized',
+    name: 'not-authorized',
+    component: NotAuthorized,
+    meta: {
+      require_auth: true
+    }
+  },
+  
 ];
 
 const router = createRouter({

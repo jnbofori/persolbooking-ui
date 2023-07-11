@@ -43,10 +43,9 @@ export default {
       'userRole'
     ]),
     layout() {
-      console.log("rrooorlr", this.userRole)
-      if (this.userRole === 'admin') { 
+      if (this.$route.meta.layout === 'admin') { 
         return LayoutAdmin
-      } else if (this.userRole === 'employee') {
+      } else if (this.$route.meta.layout === 'default') {
         return LayoutDefault
       }
       return LayoutBlank

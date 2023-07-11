@@ -10,7 +10,6 @@ const store = createStore({
   },
   mutations: {
     setUser (state, payload) {
-      console.log('heree!!', payload)
       state.user = payload
     },
     setAuthorized (state, payload) {

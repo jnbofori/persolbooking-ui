@@ -9,7 +9,7 @@
         </el-button>
       </div>
 
-      <div class="grid grid-cols-3 gap-y-10 justify-items-center">
+      <div v-if="bookings.length" class="grid grid-cols-3 gap-y-10 justify-items-center">
         <div v-for="booking in bookings" :key="booking._id" class="rounded-xl p-4 w-11/12 shadow-md border">
           
           <div class="flex justify-between">
@@ -38,6 +38,11 @@
           <div>By: {{ get(booking, 'bookedBy.firstname', 'N/A') }} {{ get(booking, 'bookedBy.lastname', 'N/A') }}</div>
           <div v-if="booking && booking.department">{{ get(booking, 'department', 'N/A') }}</div>
         </div>
+      </div>
+
+      <div v-else class="text-center">
+        <h2 class="text-lg font-semibold mb-3">No Data Found</h2>
+        <div>No bookings to display</div>
       </div>
     </div>
   </div>

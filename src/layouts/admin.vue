@@ -91,12 +91,6 @@ export default {
     IconMenu,
     Document
   },
-  methods: {
-    goToPage() {
-      console.log("called")
-      this.$router.push({ name: 'admin-bookings' });
-    }
-  }
 }
 </script>
 
