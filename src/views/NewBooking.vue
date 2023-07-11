@@ -9,6 +9,7 @@
               size="large"
               type="datetime"
               placeholder="Select date and time"
+              :disabled-date="disabledStartDate"
             />
           </el-form-item>
         </el-col>
@@ -20,6 +21,7 @@
               size="large"
               type="datetime"
               placeholder="Select date and time"
+              :disabled-date="disabledEndDate"
             />
           </el-form-item>
         </el-col>
@@ -49,6 +51,7 @@
 <script>
 import axios from "axios";
 import { ElMessage } from 'element-plus'
+import { isAfter, isBefore, isPast, isToday } from 'date-fns';
 
 export default {
   name: 'booking-form',
@@ -112,6 +115,12 @@ export default {
           type: 'success',
         })
       }
+    },
+    disabledStartDate(date) {
+      return isPast(date) && !isToday(date) || (this.endTime && isAfter(date, this.endTime))
+    },
+    disabledEndDate (date) {
+      return isPast(date) && !isToday(date) || (this.startTime && isBefore(date, this.startTime))
     },
     resetForm() {
       this.startTime = ''
