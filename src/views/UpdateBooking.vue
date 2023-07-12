@@ -145,7 +145,6 @@ export default {
         this.resetForm()
         this.$emit("closeDialog")
       } catch (e) {
-        console.log(e)
         ElMessage({
           message: get(e, "response.data.message"),
           type: 'error',

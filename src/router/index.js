@@ -182,7 +182,6 @@ const router = createRouter({
 
 
 router.beforeEach((to, from) => {
-  console.log({to, from})
   if (to.name === from.name) { return true }
   const hasAccessToken = !!localStorage.getItem('token');
   const userData = JSON.parse(localStorage.getItem('userData'));

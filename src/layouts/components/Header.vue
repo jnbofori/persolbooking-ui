@@ -3,8 +3,14 @@
     <img v-if="currentUserRole === 'employee'" src="https://www.persol.net/wp-content/uploads/2016/10/Persol-Logo-small.png" alt="Logo" class="my-3">
     <h4 class="text-lg font-medium">{{ $route.meta.pageTitle }}</h4>
     <div class="mr-5 flex flex-row items-center">
-      <div class="mr-3">{{ currentUserName }}</div>
-      <el-icon :size="20" class="cursor-pointer" @click="logout"><guide /></el-icon>
+      <div class="mr-1">{{ currentUserName }}</div>
+      <el-tooltip
+        effect="dark"
+        content="Log Out"
+        placement="top-start"
+      >
+        <img src="../../assets/log-out.svg" alt="Logout SVG" class="cursor-pointer mr-2"  @click="logout"/>
+      </el-tooltip>
     </div>
   </div>
 </template>
@@ -12,15 +18,12 @@
 <script>
 import { get } from 'lodash';
 import {
-  Guide
 } from '@element-plus/icons-vue'
 
 export default {
   name: "Header",
   props: ['user'],
-  components: {
-    Guide
-  },
+  components: {},
   computed: {
     currentUserName () {
       return `${get(this.$store, "state.user.firstname")} ${get(this.$store, "state.user.lastname")}`

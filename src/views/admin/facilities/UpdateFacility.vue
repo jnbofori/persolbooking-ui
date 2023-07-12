@@ -73,7 +73,6 @@ export default {
         this.description = facility.description
         this.facilityType = facility.facilityType
       }catch (e) {
-        console.log('error', e)
         ElMessage({
           message: get(e, "response.data.message"),
           type: 'error',
@@ -96,7 +95,6 @@ export default {
           })
         }
       }catch (e) {
-        console.log('error', e)
         ElMessage({
           message: get(e, "response.data.message"),
           type: 'error',
