@@ -73,7 +73,7 @@ export default {
     }
   },
   async created() {
-    this.fetchFacilities()
+    await this.fetchFacilities()
   },
   watch: {
     editingBooking: {
@@ -81,7 +81,7 @@ export default {
         if (booking){
           this.startTime = booking.startTime
           this.endTime = booking.endTime
-          this.facility = booking.facility
+          this.facility = booking.facility._id
         }
       },
       immediate: true,
@@ -166,7 +166,7 @@ export default {
   computed: {
     validDatesAndTimes() {
       if (this.startTime && this.endTime) {
-        return isBefore(this.startTime, this.endTime) && isFuture(this.startTime) && isFuture(this.endTime)
+        return isBefore(this.startTime, this.endTime) && isFuture(this.startTime) && isFuture(this.endTime) && this.facility
       }
       return false
     },

@@ -1,6 +1,7 @@
 <template>
   <div class="mt-5 mx-2 shadow-md rounded-md p-10 border-t">
     <el-form label-width="120px" :label-position="'top'">
+      <el-alert v-if="errorMessage" :title="errorMessage" type="error" class="mb-4" />
       <el-row>
         <el-col :span="12" class="mx-3">
           <el-form-item label="Name">
@@ -35,12 +36,17 @@ export default {
     return {
       name: '',
       description: '',
+      errorMessage: '',
     }
   },
   async created() {},
   methods: {
     async handleSubmit() {
       try {
+        if (!this.name) {
+          this.errorMessage = 'Please input a name'
+          return
+        }
         await axios.post('admin/facility-type',{
           name: this.name,
           description: this.description,

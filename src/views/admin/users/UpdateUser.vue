@@ -1,6 +1,7 @@
 <template>
   <div class="mt-5 mx-2 shadow-md rounded-md p-10 border-t">
     <el-form label-width="120px" :label-position="'top'">
+      <el-alert v-if="errorMessage" :title="errorMessage" type="error" class="mb-4" />
       <el-row>
         <el-col :span="11" class="mx-3">
           <el-form-item label="First name">
@@ -54,6 +55,8 @@ export default {
   components: {},
   data() {
     return {
+      errorMessage: '',
+      formInvalid: true,
       employeeId: '',
       departmentOptions: [
         {
@@ -107,6 +110,11 @@ export default {
     },
     async handleSubmit() {
       try {
+        this.validateForm()
+        if (this.formInvalid) {
+          return
+        }
+
         await axios.put(`admin/employee/${this.employeeId}`,{
           firstname: this.firstname,
           lastname: this.lastname,
@@ -131,6 +139,29 @@ export default {
           message: get(e, "response.data.message"),
           type: 'error',
         })
+      }
+    },
+    validateForm() {
+      this.errorMessage = ''
+      this.formInvalid = false
+
+      if (!this.firstname || !this.lastname || !this.email || !this.password || !this.department) {
+        this.errorMessage = 'Missing required fields'
+        this.formInvalid = true
+      }
+      const passwordRegExp = /(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*/
+       if (!passwordRegExp.test(this.password)) {
+        this.errorMessage = 'Your password must contain at least eight(8) characters, one uppercase, one lowercase, one special character and one digit'
+        this.formInvalid = true
+       }
+      const emailRegExp = /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/
+      if (!emailRegExp.test(this.email)) {
+        this.errorMessage = 'Invalid email'
+        this.formInvalid = true
+      }
+      if (this.firstname.length < 3 || this.lastname.length < 3) {
+        this.errorMessage = `Length of firstname and lastname should be at least 2 characters`
+        this.formInvalid = true
       }
     },
   }

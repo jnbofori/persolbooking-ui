@@ -1,6 +1,7 @@
 <template>
   <div class="mt-5 mx-2 shadow-md rounded-md p-10 border-t">
     <el-form label-width="120px" :label-position="'top'">
+      <el-alert v-if="errorMessage" :title="errorMessage" type="error" class="mb-4" />
       <el-row class="ml-3">
         <el-form-item label="Type">
           <el-select v-model="facilityType" placeholder=" ">
@@ -49,7 +50,8 @@ export default {
       name: '',
       description: '',
       facilityType: '',
-      facilityTypeOptions: []
+      facilityTypeOptions: [],
+      errorMessage: ''
     }
   },
   async created() {
@@ -81,6 +83,11 @@ export default {
     },
     async handleSubmit() {
       try {
+        if (!this.name || !this.facilityType) {
+          this.errorMessage = 'Missing required fields'
+          return
+        }
+
         await axios.post('admin/facility',{
           name: this.name,
           description: this.description,

@@ -139,7 +139,7 @@ export default {
   computed: {
     validDatesAndTimes() {
       if (this.startTime && this.endTime) {
-        return isBefore(this.startTime, this.endTime) && isFuture(this.startTime) && isFuture(this.endTime)
+        return isBefore(this.startTime, this.endTime) && isFuture(this.startTime) && isFuture(this.endTime) && this.facility
       }
       return false
     },
